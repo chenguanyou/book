@@ -1,0 +1,228 @@
+.BottomToolBar{
+	margin-top:20px;
+}
+.BottomGroupList{
+	width:500px;
+	display:inline-block;
+	height:55px;
+	overflow-x:auto;
+	-webkit-overflow-scrolling:touch;
+	overflow-y:hidden;
+}
+.BottomGroupList ul{
+	list-style:none;
+	display:inline-block;
+	vertical-align:top;
+	padding-left:0;
+	white-space:nowrap;
+}
+.BottomGroupList ul li{
+	list-style:none;
+	display:inline-block;
+	margin-right:10px;
+}
+.BottomGroupList ul img{
+	width:40px;
+	height:40px;
+	cursor:pointer;
+	border:1px solid #ddd;
+	border-radius:5px;
+}
+.BottomGroupList ul li .active{
+	border:1px solid #f23030;
+}
+.rightButtons{
+	float:right;
+	margin-top:0;
+	display:inline-block;
+	vertical-align:top;
+}
+.rightButtons button{
+	margin-left:10px;
+}
+.PlusButton{
+	display:inline-block;
+	position:relative;
+	padding-top:3px;
+}
+
+
+.PlusButton ul{
+	position:absolute;
+	right:0;
+	bottom:30px;
+	background-color:#fff;
+	border:1px solid #ddd;
+	border-bottom:0;
+	list-style:none;
+	padding-left:0;
+}
+.PlusButton ul li{
+	width:60px;
+	text-align:center;
+	padding:10px;
+	font-size:16px;
+	margin:0;
+	cursor:pointer;
+	border-bottom:1px solid #ddd;
+	list-style:none;
+}
+.PlusButton ul li:horver,.PlusButton ul li:focus{
+	background-color:#ddd;
+}
+
+.imageList{
+	height:270px;
+	max-height:600px;
+	overflow:auto;
+}
+.imageList ul{
+	list-style:none;
+	padding:0;
+}
+.imageList ul li{
+	list-style:none;
+	display:inline-block;
+	position:relative;
+}
+.imageList ul li i{
+	display:none;
+	position:absolute;
+	width:28px;
+	height:28px;
+	font-size:28px;
+	color:#f23030;
+	left:10px;
+	top:10px;
+	padding-left:2px;
+	border-radius:14px;
+	background-color:#fff;
+}
+.imageList img{
+	max-height:120px;
+	max-width:120px;
+	cursor:pointer;
+	margin:5px;
+}
+.ImageSelected .icon-ok-sign{
+	display:inline;
+}
+.TopToolBar{
+	margin-bottom:0;
+}
+.TopToolBar h2{
+	font-weight:500;
+	font-size:30px;
+	margin-top:0;
+	height:40px;
+	padding-right:40px;
+}
+.TopToolBar .pull-right{
+	margin-top:-45px;
+	display:inline-block;
+	vertical-align:top;
+}
+.TopToolBar button{
+	margin-left:20px;
+}
+@media screen and (max-width: 599px) {
+	.TopToolBar button{
+		margin-left:10px;
+	}
+	.BottomGroupList{
+		width:65%;
+	}
+}
+.btn-close{
+	width:28px;
+	height:28px;
+	border-radius:14px;
+	padding:0;
+	padding-left:1px;
+	margin-left:20px;
+	vertical-align:top;
+}
+
+.UploadImage{
+	height:400px;
+	overflow:auto;
+}
+
+.UploadImage ul,.UploadImage li{
+	list-style:none;
+	padding-left:0;
+}
+.UploadImage ul li span{
+	cursor:pointer;
+	vertical-align: middle;
+}
+.GroupList,.InputGroupName{
+	margin-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+.GroupList{
+	cursor:pointer;
+}
+.group{
+	width:42px;
+	margin-right:10px;
+	text-align: center;
+	display:inline-block;
+}
+.group i{
+	font-size:30px;
+	color:#337ab7;
+}
+.group img{
+	width:40px;
+	height:40px;
+	cursor:pointer;
+	border:1px solid #ddd;
+	border-radius:5px;
+}
+.InputGroupName input{
+	margin-right:10px;
+	vertical-align:middle;
+	padding-left:3px;
+	padding-right:3px;
+}
+.InputGroupName p{
+	padding-left:50px;
+	margin-top:10px;
+}
+.discription .userImage,.talkcontent .userImage{
+	display:block;
+	max-width:100%;
+	width:100%;
+}
+.discription .userImage img,.talkcontent .userImage img{
+	max-width:100%;
+	cursor:pointer;
+}
+
+#collectDiv{
+
+}
+#collectDiv .btn-default{
+	margin-left:10px;
+}
+#collectDiv .userImage-bg{
+	position:fixed;
+	left:0;
+	top:0;
+	bottom:0;
+	right:0;
+	z-index:99;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+#collectDiv .userImage-buttons{
+	padding:10px;
+	border-radius:10px;
+	position:fixed;
+	display:inline-block;
+	z-index:999;
+	background-color:#fff;
+	border:1px solid #ddd;
+	min-width:255px;
+}

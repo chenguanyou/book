@@ -1,0 +1,181 @@
+{% extends 'bast.html' %}
+{% block title %}
+		<title>小白读书首页</title>
+		<meta name="Description" content="话本小说网，定义小说新模式，读小说就象聊天一样轻松有趣！言情小说、玄幻小说、都市小说、同人小说、校园小说、鬼故事等应有尽有。国内领先移动创作社区，手机写小说更方便。">
+		<meta name="Keywords" content="话本小说,气泡小说,对话小说,手机写小说,写小说">
+{% endblock %}
+{% block js_cs %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/indexpage.css' %}" rel="stylesheet">
+{% endblock %}
+{% block container %}
+    <body>
+    <div class="container hidden-xs hidden-sm">
+        <div class="HuabenCatalogList">
+            <a href="{% url 'novel:noveltage' %}" class="huaben-btn huaben-btn-grey pull-right"><i class="icon-list"></i>全部分类</a>
+            <ul class="list-inline">
+                {% for channel in channel %}
+                    <li>
+                        <a href="{% url 'novel:noveltage' %}?&cx={{ channel.channel_name }}&tagid=1" class="active">{{ channel.channel_name }}</a>
+                    </li>
+                    {% for tag in channel.get_tag %}
+                    <li>
+                        <a href="{% url 'novel:noveltage' %}?&tag={{ tag.tag_name }}&tagid={{ channel.id }}">{{ tag.tag_name }}</a>
+                    </li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+	<!-- 封推 -->
+
+    <div class="container text-center tIndex big_bg">
+		<div class="slide_index" style="width: 480px; height: 225px;">
+			<ul class="slider">
+				<li>
+                    {% for ad in indexId %}
+                        <a href="{{ ad.adUrl }}" target="_blank">
+                            <img src="../../../../Banner/{{ ad.adImage }}" alt="{{ ad.adTitle }}" style="width: 480px; height: 225px;">
+                        </a>
+                    {% endfor %}
+                </li>
+            </ul>
+            <div class="control-slide">
+                <div data-action="-1" class="btn-prev">
+                    <i class="icon-chevron-left"></i>
+				</div>
+				<div data-action="1" class="btn-next">
+					<i class="icon-chevron-right"></i>
+				</div>
+            </div>
+            <ul class="point-recomm">
+			</ul>
+        </div>
+        <ul class="cover-right-list hidden-xs">
+            {% for novel_recomm in novel_recomm %}
+                <li {% if forloop.counter|divisibleby:2 %}class="visible-md-inline-block visible-lg-inline-block"{% endif %}>
+                    <a href="{% url 'novel:book' novel_recomm.id %}" target="_blank">
+                        <img src="../../../../Banner/{{ novel_recomm.novel_image }}" class="cover-full" alt="{{ novel_recomm.novel_name }}">
+                    </a>
+                </li>
+            {% endfor  %}
+            <li class="visible-lg-inline-block" id="pList1">
+                {% for novel_recomm_h in novel_recomm_h %}
+                    <a href="{% url 'novel:book' novel_recomm_h.novel.id %}" target="_blank">
+                        <img src="../../../Banner/{{ novel_recomm_h.novel_image }}" class="cover-half" alt="{{ novel_recomm_h.title }}">
+                    </a>
+			    {% endfor %}
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+	<div class="container hidden-md hidden-lg middleButtons">
+		<ul class="list-inline">
+			<li>
+				<a href=""><i class="hicon-catalog"></i><span>分类</span></a>
+			</li>
+			<li>
+				<a href=""><i class="hicon-shelf"></i><span>收藏</span></a>
+			</li>
+			<li>
+				<a href=""><i class="hicon-write"></i><span>写作</span></a>
+			</li>
+			<li>
+				<a href=""><i class="hicon-my"></i><span>我的</span></a>
+			</li>
+		</ul>
+	</div>
+	<div class="container tIndex hidden-md hidden-lg">
+		<!-- 短篇 -->
+		<div></div>
+
+
+	</div>
+	<div class="container tIndex">
+		<!-- 同人专区 -->
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div class="left-side">
+			<h1>女生小说专区<small></small>
+			</h1>
+			<ul class="cover-list">
+                {% for woman_list in woman_novel %}
+				<li {% if forloop.counter > 4 %}class="hidden-xs"{% endif %}>
+					<a href="{% url 'novel:book' woman_list.id %}" target="_blank"><img src="../../../Banner/{{ woman_list.novel_image }}" class="cover-full" alt="{{ woman_list.novel_name }} "></a>
+					<h4 class="text-center">
+						<a href="{% url 'novel:book' woman_list.id %}" target="_blank">{{ woman_list.novel_name }}</a>
+					</h4>
+					<p class="text-center">
+						<a href="{% url 'novel:book' woman_list.id %}" target="_blank" class="text-lightgrey">{{ woman_list.novel_alias }}</a>
+					</p>
+				</li>
+                {% endfor %}
+
+
+			</ul>
+		</div>
+
+		<!-- 火热推荐 -->
+        <div class="right-side visible-lg-inline-block">
+			<h1>火热推荐</h1>
+            {% for fiery in fiery_novel %}
+                <div class="hotList">
+				<a href="{% url 'novel:book' fiery.id %}" target="_blank">
+					<img alt="{{ fiery.novel_name }}" src="../../../Banner/{{ fiery.novel_image }}" class="cover-full">
+					<span class="order"><span class="no">{{ forloop.counter }}</span></span>
+				</a>
+				<div>
+					<h4><a href="{% url 'novel:book' fiery.id %}" target="_blank">{{ fiery.novel_name }}</a></h4>
+					<p class="text-lightgrey">{{ fiery.novel_alias }}</p>
+				</div>
+			</div>
+            {% endfor %}
+		</div>
+
+		</div>
+	<div class="container tIndex">
+		<!-- 原创专区 -->
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <!-- 男生专区 -->
+
+<div class="bottom-side">
+			<h1>热门小说<small>=_=✧</small></h1>
+			<ul class="cover-list">
+                {% for hot in hot_novel %}
+                <li>
+					<a href="{% url 'novel:book' hot.id %}" target="_blank"><img src="../../../../../Banner/{{ hot.novel_image }}" class="cover-full" alt="{{ hot.novel_alias }}"></a>
+					<h4 class="text-center">
+						<a href="{% url 'novel:book' hot.id %}" target="_blank">{{ hot.novel_name }}</a>
+					</h4>
+					<p class="text-center">
+						<a href="{% url 'novel:book' hot.id %}" target="_blank" class="text-lightgrey">{{ hot.novel_alias }} </a>
+					</p>
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+
+<!-- 编辑推荐 -->
+
+<div class="bottom-side">
+			<h1>编辑推荐<small>๑;◡;๑ (●´∀ᓠ●)</small></h1>
+			<ul class="cover-list">
+                {% for nowedit in now_novel %}
+                <li>
+					<a href="{% url 'novel:book' nowedit.id %}" target="_blank"><img src="../../../../Banner/{{ nowedit.novel_image }}" class="cover-full" alt="{{ nowedit.novel_name }}"></a>
+					<h4 class="text-center">
+						<a href="{% url 'novel:book' nowedit.id %}" target="_blank">{{ nowedit.novel_name }}</a>
+					</h4>
+					<p class="text-center">
+						<a href="{% url 'novel:book' nowedit.id %}" target="_blank" class="text-lightgrey">{{ nowedit.novel_alias }}</a>
+					</p>
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+
+
+		</div></body>
+{% endblock %}

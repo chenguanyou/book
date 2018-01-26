@@ -1,0 +1,44 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>第一章内容</title>
+    <meta name="Description" content="第一章内容详情简介" />
+    <meta name="Keywords" content="第一章内容详情关键字" />
+{% endblock %}
+{% block cssjs %}
+    {% load staticfiles %}
+    <link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+    <link href="{% static 'css/jquery-confirm.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/index.css' %}?v=20171115" rel="stylesheet"/>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-confirm.js' %}?v=20160718"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'css/emojione.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/newbook.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/reward.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/userimage.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/cosplay.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/comment.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/recommend.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block container %}
+
+<div class="container">
+		<div id="chaptertitle" class="chapterTitle text-center">
+			<h1>{{ novel_text.novelchapter_name }}</h1>
+			<div class="text-center">
+				<ul class="list-inline text-lightgrey">
+					<li><a href="" class="text-lightgrey">{{ novel_text.novelchapter_cover.novel_name }}</a></li>
+					<li><a href="" class="text-lightgrey">{{ novel_text.novelchapter_cover.novel_user.nick_name }}</a></li>
+					<li>{{ novel_text.novelchapter_time }}</li>
+				</ul>
+			</div>
+		</div>
+		<div id="content"></div>
+	</div>
+	<div id="bookname">{{ novel_text.novelchapter_name }}</div>
+	<div id="contentsource" style="margin-top: 10px;">
+    <p class="dp" style="font-size: 16px; min-height: 24px; padding-bottom: 24px;">{{ novel_text.novelchapter_text }}<span class="text-center userImage"></p>
+</div>
+{% endblock %}
+

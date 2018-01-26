@@ -1,0 +1,223 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-transform " />
+<meta name="applicable-device" content="pc,mobile">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+<meta name="format-detection" content="telphone=no, email=no"/>
+<link rel="shortcut icon" href="">
+<link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+<link href="{% static 'css/jquery-confirm.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/index.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/tipnav.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/catalog.css' %}?v=20160908" rel="stylesheet"/>
+{% block cssjs %} {% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-1.12.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+{% block js_cs %} {% endblock %}
+{% block title %}<title>{{ request.user.nick_name }}的个人中心</title>{% endblock %}
+</head>
+<body>
+
+<header class="huabenheader hidden-lg hidden-md">
+	<div class="HuabenNavTop">
+		<div class="TopNav">
+			<ul class="pull-right">
+				<li><a href="{% url 'novel:search' %}" class="huaben-img-btn search">[搜索]</a></li>
+				<li><a href="#" id="huabenMore" class="huaben-img-btn more">[菜单]</a></li>
+			</ul>
+			<div class="hlogo">
+				<a href="/">
+					<img alt="话本小说" src="{% static '/images/logo.png' %}"/>
+				</a>
+			</div>
+		</div>
+
+		<div class="TopButtons">
+			<ul>
+				<li><a href="{% url 'index' %}"><i class="hicon-home"></i><span>首页</span></a></li>
+				<li><a href="{% url 'novel:noveltage' %}"><i class="hicon-catalog"></i><span>分类</span></a></li>
+			</ul>
+			<ul>
+				<li><a href="{% url 'users:userfave' %}"><i class="hicon-shelf"></i><span>收藏</span></a></li>
+				<li><a href=""><i class="hicon-write"></i><span>写作</span></a></li>
+				<li><a href="{% url 'users:userhome' %}"><i class="hicon-my"></i><span>我的</span></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="TopButtonsBG"></div>
+	<div class="TopButtonsSpace"></div>
+</header>
+
+
+<header class="huabenheader hidden-xs hidden-sm">
+	<div class="container HuabenNavTop">
+		<div class="pull-left hlogo">
+      <a href="{% url 'index' %}">
+					<img alt="小白读书" src="{% static '/images/logo.png' %}"/>
+			</a>
+		</div>
+		<ul class="pull-right list-inline">
+			<li>
+                <a href="{% url 'users:userfave' %}" class="bookshelf">书架</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li id="nav_usercenter_bar" style="">
+				<a href="{% url 'users:userhome' %}" class="userpic">
+				<img src="../../../Banner/{{ request.user.image }}" id="user_head_bar" alt="陈冠佑">
+				<span>{{ request.user.nick_name }}</span>
+				<iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
+                </a>
+			</li>
+            {% else %}
+            <li id="nav_login_bar" style="">
+                <a href="{% url 'users:dl' %}" class="avatar">登录</a>
+                <iframe id="tmp_downloadhelper_iframe" style="display: none;">
+                </iframe>
+            </li>
+            {% endif %}
+			<li id="nav_usercenter_bar" style="display: none;">
+				<a href="{% url 'users:userhome' %}" class="userpic">
+				<img src="" id="user_head_bar"/>
+				</a>
+			</li>
+		</ul>
+		<div class="text-center">
+			<form action="{% url 'novel:search' %}" method="get" id="newSearchForm">
+			<div class="searchForm" id="susearch">
+				<input type="text" id="newSearchInput" name="keyword" placeholder="搜索">
+				<button type="submit" id="susearch"></button>
+			</div>
+                {% csrf_token %}
+			</form>
+		</div>
+	</div>
+</header>
+<div class="HuabenNav hidden-xs hidden-sm">
+	<div class="container">
+{#		<div class="pull-right">#}
+{#			<ul class="list-inline HuabenNavButton">#}
+{#				<li><a href="#" class="huaben-btn huaben-btn-yellow"><i class="icon-money"></i>写作福利</a></li>#}
+{#				<li><a href="{% url 'users:writinghome' %}" class="huaben-btn huaben-btn-red"><i class="icon-coffee"></i>写作后台</a></li>#}
+{#			</ul>#}
+{#		</div>#}
+		<div>
+			<ul class="list-inline navTab" lang="navTab">
+				<li><a href="{% url 'index' %}"><span>首页</span></a></li>
+				<li><a href="{% url 'novel:noveltage' %}"><span>分类</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% block container %}
+<div class="container">
+	<ul class="nav nav-tabs subnavigator" id="user_nav_bar">
+		<li {% if msg == 'home' %}class="active"{% endif %}><a href="{% url 'users:userhome' %}">主页</a></li>
+		<li {% if msg == 'site' %}class="active"{% endif %}><a href="{% url 'users:usersiteup' %}">设置</a></li>
+		<li class="pull-right"><a href="{% url 'users:logout' %}">退出</a></li>
+	</ul>
+</div>
+{% block center %}
+	 <div class="container">
+		<div class="text-center">
+			<h3>&nbsp;</h3>
+			<img src="../../../../Banner/{{ request.user.image }}" style="width: 80px;height: 80px;" class="img-circle" id="user_center_picurl">
+				<em class="vip_icon_ol"></em>
+			<h3 class="text-center text-warning">你好！{{ request.user.nick_name }}</h3>
+			<hr/>
+		</div>
+    </div>
+            <div class="mybookslist">
+            {% for no_user_novel in num.object_list %}
+                <div class="searchresult">
+                    <div>
+                        <img class="img-rounded" src="../../../../Banner/{{ no_user.image }}">
+                        <p class="text-muted">
+                            <span class="text-muted">{{ no_user.nick_name }}</span>
+                            <small>{{ no_user_novel.novel_time|date:"Y-m-d H:i" }}</small>
+                        </p>
+                        <h1>
+                            <a href="{% url 'novel:book' no_user_novel.id %}" target="_blank" class="text-info">{{ no_user_novel.novel_name }}</a>
+                        </h1>
+                    </div>
+                    <div class="clearfix searchresult-info">
+                        <p>
+                            <a href="{% url 'novel:book' no_user_novel.id %}" target="_blank">{{ no_user_novel.novel_text }}</a>
+                        </p>
+                        <ul class="list-inline text-muted">
+                            <li>{{ no_user_novel.novel_next }}人看过</li>
+                            <li>&nbsp;</li>
+                        {% if no_user_novel.novel_tage.all %}
+                            <li>标签：</li>
+                            <li>
+                                <i class="text-muted">{% for tag in no_user_novel.novel_tage.all %}{{ tag }}  {% endfor %}</i>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    <!--用户小说作品的分页--->
+                <div class="text-center">
+                <div class="pagination">
+                <div class="btn-group">
+                {% if num.has_previous %}
+                    <a class="btn btn-default" a href="?{{ num.previous_page_number.querystring }}">«</a>
+                    {% endif %}
+                {% for page in num.pages %}
+                     {% if page %}
+                    {% ifequal page num.number %}
+                    <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                    {% else %}
+                    <a class="btn btn-default" href="?{{ page.querystring }}">{{ page }}</a>
+                    {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+                {% if num.has_next %}
+                    <a class="btn btn-default" href="?{{ num.next_page_number.querystring }}">»</a>
+                {% endif %}
+                </div>
+            </div>
+		</div>
+{% endblock %}
+{% endblock %}
+﻿<!--通用底部开始-->
+	<div class="container navFooter">
+		<div class="text-center footer">
+			<ul>
+				<li><a href="" target="_blank">关于我们</a></li>
+				<li><a href="" target="_blank">加入我们</a></li>
+				<li><a href="" target="_blank">联系我们</a></li>
+				<li><a href="" target="_blank">帮助中心</a></li>
+			</ul>
+			<div class="text-center" style="margin-top:-10px;">
+				<ul class="foot2 visible-xs-block">
+					<li><a href="" class="text-dark">下载客户端</a></li>
+					<li><a href="" class="text-dark">关注微博</a></li>
+					<li class="text-dark">QQ群：********</li>
+				</ul>
+				<ul class="foot2 hidden-xs" id="QRlist"></ul>
+				<p style="margin-top:3px;">&copy;2017 ***.com 京ICP备******号 *******科技有限公司 <a href="" target="_blank" class="text-dark">版权保护声明</a></p>
+				<p style="margin-top:3px;">北京市朝阳区**********室 010-********</p>
+				<div id="QRcode" style="display:none;position:absolute;" class="text-center">
+					<img border="0"/>
+					<p class="text-center"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--通用底部结束-->
+{% block db_js %}
+{% endblock %}
+</div>
+</body>
+</html>

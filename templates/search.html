@@ -1,0 +1,56 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>{% if search_novel.object_list %}关于{{ search_key }}的全部结果{% else %}没有找到任何内容{% endif %}</title>
+{% endblock %}
+{% block container %}
+    {% load staticfiles %}
+        <div class="container">
+           {% if msg == "no" %}
+               <div class="notfound">
+                    <img src="{% static 'images/notfound.png@200w.png' %}"><h2>没有搜索到相关内容</h2>
+                   <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>
+               </div>
+            {% else %}
+                {% for key in search_novel.object_list %}
+                    <div class="searchresult">
+                        <div>
+                            <a href="{% url 'users:nouser' key.novel_user.id %}" target="_blank"><img class="img-rounded" src="../../../../Banner/{{ key.novel_user.image }}"></a>
+                            <p class="text-muted"><span><a href="{% url 'users:nouser' key.novel_user.id %}" class="text-muted" target="_blank">{{ key.novel_user.nick_name }}</a></span> <small>{{ key.novel_time|date:"Y-m-d" }}</small></p>
+                            <h2><a href="{% url 'novel:book' key.id %}" target="_blank">{{ key.novel_name }}</a></h2>
+                        </div>
+                        <div class="clearfix searchresult-info">
+                            <p><a href="{% url 'novel:book' key.id %}" target="_blank">{{ key.novel_text }}</a></p>
+                            <ul class="list-inline text-muted">
+                                <li>{{ key.novel_next }}人看过</li>
+
+                            </ul>
+                        <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>
+                    </div>
+                {% endfor %}
+                            <div class="text-center">
+                        <div class="pagination">
+                        <div class="btn-group">
+                        {% if search_novel.has_previous %}
+                            <a class="btn btn-default" a href="?{{ search_novel.previous_page_number.querystring }}">«</a>
+                            {% endif %}
+                        {% for page in search_novel.pages %}
+                             {% if page %}
+                            {% ifequal page search_novel.number %}
+                            <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                            {% else %}
+                            <a class="btn btn-default"  href="?{{ page.querystring }}">{{ page }}</a>
+                            {% endifequal %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if search_novel.has_next %}
+                            <a class="btn btn-default" href="?{{ search_novel.next_page_number.querystring }}">»</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <nav class="text-center searchpagenav">
+                    <ul class="pagination">
+                    </ul>
+                </nav>
+        {% endif %}
+{% endblock %}

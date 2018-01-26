@@ -1,0 +1,142 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>小说的分类</title>
+    <meta name="Description" content="话本小说网为您推荐最好看的古代言情小说大全，打造古代言情小说排行榜，您可以方便的进行古代言情小说免费阅读。看古代言情小说，就上话本小说网。" />
+    <meta name="Keywords" content="古代言情小说,好看的古代言情小说,古代言情小说排行榜,古代言情小说大全,古代言情小说推荐" />
+{% endblock %}
+{% block cssjs %}
+    {% load staticfiles %}
+    <link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+    <link href="{% static 'css/jquery-confirm.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/index.css' %}?v=20171115" rel="stylesheet"/>
+    <link href="{% static 'css/tipnav.css' %}?v=20160818" rel="stylesheet"/>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-confirm.js' %}?v=20160718"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}
+{% block container %}
+    <!--分类页面开始-->
+    <div class="container">
+        <div>
+			<span class="hidden-xs hidden-sm">当前位置: </span>
+            <a href="/">话本小说</a> &gt;
+			<a href="{% url 'novel:noveltage' %}">小说分类</a>
+            <span style="display:float;float: right;color:#ccc;">
+                <span class="hidden-xs hidden-sm">更新时间: </span>{{ novel_date.novel_time|date:"Y-m-d" }}</span>
+        </div>
+    </div>
+
+    <div class="container catalogList">
+        <div>
+            <ul class="list-inline">
+                <li>频道</li>
+                {% for channer_all in channer_all %}
+                    <li>
+                        <a href="?cx={{ channer_all.channel_name }}" coin="{{ channer_all.id }}" class="{% if channer_all.channel_name == cha %}active{% endif %}">{{ channer_all.channel_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr/>
+            <ul class="list-inline">
+                <li>类型</li>
+                <li class="sublist">
+                    <ul class="list-inline">
+                        {% for tagmodel_all in tagmodel_all %}
+                    <li>
+                        <a href="?&cx={{ cha }}&tag={{ tagmodel_all.tag_name }}" class="{% if tagmodel_all.tag_name == tag %}active{% endif %}">{{ tagmodel_all.tag_name }}</a>
+                    </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+            <ul class="list-inline booklist">
+                {% for novel_all in novel_all.object_list %}
+                    <li>
+                        <p class="text-center">
+                            <a href="{% url 'novel:book' novel_all.id %}" target="_blank">
+                                <img alt="{{ novel_all.novel_name }}" src="../../Banner/{{ novel_all.novel_image }}" class="suggestCover">
+                            </a>
+                        </p>
+                        <div class="hsuggestsLeft text-left">
+                            <h3>
+                                <a href="{% url 'novel:book' novel_all.id %}" target="_blank" class="text-muted">{{ novel_all.novel_name }}</a>
+                            </h3>
+                            <p>
+                                <a href="{% url 'users:nouser' novel_all.novel_user.id %}" target="_blank" class="text-lightgrey">{{ novel_all.novel_user.nick_name }}</a>
+                            </p>
+                            <p class="hidden-lg hidden-md">{{ novel_all.novel_read }}人看过</p>
+                            <p class="hidden-lg hidden-md pull-left">标签：
+                            <ul class="list-inline hidden-lg hidden-md taglist">
+                            <li>
+                                <a href="{% url 'users:nouser' novel_all.novel_user.id %}" target="_blank" class="text-lightgrey">{{ novel_all.novel_tag.tag_name }}</a>
+                            </li>
+                            </ul>
+                            </p>
+                        </div>
+                        <div class="hsuggestsRight">
+                            <a href="{% url 'users:nouser' novel_all.novel_user.id %}" target="_blank">
+                                <img src="../../Banner/{{ novel_all.novel_user.image }}" class="img-circle">
+                            </a>
+                        </div>
+                        <div class="text-lightgrey">
+                            <span class="hsuggestsIcon">
+                                <i class="icon-eye-open"></i>{{ novel_all.novel_next }}
+                            </span>
+                            <span class="hsuggestsIcon">
+                                <i class="icon-heart-empty"></i>{{ novel_all.novel_fave }}
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+    </div>
+
+    <div class="container text-center">
+        <div class="pagination">
+            <div class="btn-group">
+                {% if novel_all.has_previous %}
+                    <a class="btn btn-default" a href="?{{ novel_all.previous_page_number.querystring }}">«</a>
+                {% endif %}
+                {% for page in novel_all.pages %}
+                    {% if page %}
+                        {% ifequal page novel_all.number %}
+                            <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                        {% else %}
+                            <a class="btn btn-default" href="?{{ page.querystring }}">{{ page }}</a>
+                        {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+                {% if novel_all.has_next %}
+                    <a class="btn btn-default" href="?{{ novel_all.next_page_number.querystring }}">»</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container"></div>
+    <style type="text/css">
+    .footc{
+        border-bottom: 4px solid #f1f1f1;
+        background: #f8f8f8;
+        padding:15px;
+    }
+    .footc p{
+        margin-top:0;
+        padding-bottom:5px;
+        border-bottom:1px solid #ccc;
+        color:#666;
+    }
+    .footc a{
+        color:#666;
+    }
+    .footc>ul>li{
+        width:48%;
+        vertical-align:top;
+    }
+    </style>
+{% endblock %}
+{% block db_js %}
+{% endblock %}

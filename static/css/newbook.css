@@ -1,0 +1,568 @@
+#bookname {
+	display: none;
+}
+#preAndNextBar{
+	display: none;
+}
+.page_site{
+	display:none;
+}
+.text-large{
+  font-size:1.5rem;
+}
+.text-small{
+  font-size:.5rem;
+}
+
+.left {
+  float: left !important;
+}
+
+.right {
+  float: right !important;
+}
+
+.nbcontent,#contentsource{
+	max-width:640px;
+	min-width:280px;
+	margin-top:10px;
+	margin:auto;
+}
+
+.chapterTitle{
+	margin-bottom:2rem;
+}
+
+.nb-noflip{
+	/*
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+
+	padding:0.5rem;
+	margin-bottom:2rem;
+	*/
+}
+
+.nb-flip{
+	overflow:hidden;
+	padding:0;
+}
+
+.nb-slider{
+	/*Gecko: Firefox3.6+*/
+	-moz-column-width: 800px;
+	-moz-column-gap: 10px;
+	/*Webkit: Safari鍜孋hrome*/
+	-webkit-column-width: 800px;
+	-webkit-column-gap: 10px;
+	/*W3C鏍囧噯*/
+	column-gap: 10px;
+	column-width: 800px;
+	position:relative;
+	padding:10px;
+}
+
+.nbcontent,.nbcontent-b p{
+	clear:both;
+}
+
+.discription{
+	clear:both;
+	float:none;
+}
+
+.discription p,#contentsource>p{
+	margin:0;
+	font-size:16px;
+	line-height:1.5;
+	padding-right:1rem;
+	word-break:break-all;
+}
+
+#contentsource>p{
+	margin-bottom:27px;
+}
+
+#contentsource>p>i,#contentsource>p>span{
+	min-width:70px;
+	display:inline-block;
+}
+
+/* flex鏍峰紡 */
+.talk{
+	clear:both;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding-bottom:1rem;
+	padding-top:1rem;
+	padding-right:1rem;
+}
+
+.talk .talkcontent{
+	-webkit-box-flex: auto;
+	-moz-box-flex: auto;
+	-webkit-flex: auto;
+	-ms-flex: auto;
+	flex: auto;
+}
+
+.talk .avatar{
+	width:50px;
+	max-width:50px;
+	min-width:50px;
+	-webkit-box-flex: auto;
+	-moz-box-flex: auto;
+	-webkit-flex: auto;
+	-ms-flex: auto;
+	flex: auto;
+}
+
+.talk p
+{
+	clear:both;
+	background: #F1F1F1;
+	border-radius: 8px;
+	padding: 8px 12px 8px 12px;
+	color: #333;
+	text-align: left;
+	margin-top:0;
+	max-width:560px;
+	min-width:2em;
+	margin-left:0.5rem;
+	margin-right:0.5rem;
+	display:inline-block;
+	word-break:break-all;
+}
+
+.text-right .talk .avatar{
+	text-align:left;
+}
+
+/* 闈瀎lex鏍峰紡 */
+
+.TalkOldStyle{
+	clear:both;
+	margin-bottom:1rem;
+}
+
+.talkbox .avatar{
+	width:50px;
+}
+
+@media screen and (min-width: 768px) {
+	.talkbox .avatar em{
+		margin-left:-25px;
+	}
+}
+.talkbox p
+{
+	clear:both;
+	background: #F1F1F1;
+	border-radius: 8px;
+	padding: 8px 12px 8px 12px;
+	color: #333;
+	text-align: left;
+	margin-top:0;
+	max-width:520px;
+	min-width:2em;
+	margin-left:0.5rem;
+	margin-right:0.5rem;
+	display:inline-block;
+}
+
+@media screen and (max-width: 400px) {
+	.talkbox p{
+		max-width:13em;
+		margin:0;
+	}
+	.talkbox .avatar{
+		margin-right:0;
+	}
+	.talk p{
+		max-width:100%;
+		margin-left:0;
+	}
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px) {
+	.talkbox p{
+		max-width:16em;
+		margin:0;
+	}
+	.talkbox .avatar{
+		margin-right:0;
+	}
+	.talk p{
+		max-width:100%;
+		margin-left:0;
+	}
+}
+
+@media screen and (min-width: 500px) and (max-width: 767px) {
+	.talkbox p{
+		max-width:20em;
+		margin:0;
+	}
+	.talkbox .avatar{
+		margin-right:0;
+	}
+	.talk p{
+		max-width:100%;
+		margin-left:0;
+	}
+}
+
+.avatar img{
+	width:50px;
+	height:50px;
+	border-radius: 50%;
+	border:1px solid #ddd;
+	cursor:pointer;
+}
+
+.name
+{
+	font-size:0.6rem;
+	color:#7f7f7f;
+	margin-bottom:0.1rem;
+	margin-right:0.8rem;
+	margin-left:0.8rem;
+}
+
+.navtoolbar{
+	line-height:2rem;
+}
+
+.no-hide{
+	display:inline-block!important;
+}
+
+.avatar-icon{
+	text-align:center;
+}
+
+.avatar-icon img{
+	width:100px;
+	height:100px;
+	border-radius: 50%;
+	border:1px solid #ddd;
+	-webkit-box-flex: 0;
+	margin-bottom:1rem;
+}
+
+.avatardisc p{
+	font-size:0.8rem;
+	line-height:1rem;
+}
+
+.imglist{
+	margin-top:1rem;
+	text-align:center;
+}
+.imglist img{
+	width:80%;
+	margin-bottom:1rem;
+}
+.avatar-title{
+	margin-left:0.5rem;
+	margin-right:0.5rem;
+	color:#337ab7;
+}
+.avatar-star{
+	margin-top:0.5rem;
+}
+
+.controller{
+	width:100%;
+	z-index:18;
+	height:2rem;
+	position:relative;
+	margin:auto;
+}
+
+@media screen and (max-width: 800px) {
+	#contentsource{
+		padding-left:15px;
+		padding-right:15px;
+		margin-top:600px;
+	}
+	.talk .avatar{
+		width:50px;
+		max-width:50px;
+		min-width:50px;
+		-webkit-box-flex: auto;
+		-moz-box-flex: auto;
+		-webkit-flex: auto;
+		-ms-flex: auto;
+		flex: auto;
+	}
+	.avatar img{
+		height:40px;
+		width:40px;
+	}
+	.controller{
+		margin-bottom:1rem;
+	}
+	.name{
+		margin-left:6px;
+		margin-right:12px;
+	}
+}
+
+.controller-bg{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display:none;
+	z-index:10;
+}
+
+.settingButton{
+	margin-left:1rem;
+	margin-right:0.5rem;
+	margin-top:0.2rem;
+}
+
+.control-statusbar{
+	height:1.5rem;
+	font-size:1rem;
+	line-height:1rem;
+	padding-top:0.1rem;
+}
+
+.control-statusbar button{
+	margin-right:0.4rem;
+	margin-left:0.4rem;
+}
+
+.control-statusbar li{
+	display:inline-block;
+	margin-right:1rem;
+	font-size:1rem;
+}
+
+.control-panel{
+	margin-top:10px;
+	background-color:#FFF;
+	padding-top:15px;
+	padding-bottom:15px;
+	border:1px solid #ccc;
+	width:100%;
+	color:#000;
+	position:fixed;
+	z-index:2;
+}
+
+.website-ico{
+	float: left;
+    font-size:12px;
+    text-align: left;
+    overflow: hidden;
+    height: 16px!important;
+    padding-left: 20px!important;
+    background: url(http://imgcn.ihuaben.com/images/websites_ico.png) no-repeat left;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+
+.website-weibo{
+	background-position: 0px -96px;
+}
+
+.website-qzone{
+	background-position: 0px -64px;
+}
+
+.website-weixin{
+	background-position: 0px -1809px;
+}
+
+.control-fontsize,.control-bgcolor{
+	margin-left:10px;
+	margin-top:5px;
+	margin-bottom:5px;
+	display:table;
+}
+
+.sharePanel{
+	padding-top:10px;
+}
+
+.control-fontsize div{
+	display:table-cell;
+	vertical-align:top;
+}
+
+.control-fontsize button{
+	margin-right:10px;
+	font-size:14px;
+	line-height:16px;
+	padding:5px 10px 5px 10px;
+	border:0;
+}
+.control-fontsize .label{
+	margin-right:10px;
+	font-size:14px;
+	line-height:16px;
+	padding-top:5px;
+	padding-bottom:5px;
+	border:0;
+	display:inline-block;
+}
+
+.theme-white{
+	background-color:#fff;
+	color:#333;
+}
+
+.theme-pink{
+	background-color:#fce4ec;
+	color:#880e4f;
+}
+/*
+.theme-pink .talkcontent p{
+	background-color:#fccdd3;
+	color:#880e4f;
+}
+*/
+.theme-pink .control-statusbar button{
+	background-color:#fccdd3;
+}
+.theme-green{
+	background-color:#e0f2f1;
+	color:#004d40;
+}
+/*
+.theme-green .talkcontent p{
+	background-color:#e9ece5;
+	color:#004d40;
+}
+*/
+.theme-green .control-statusbar button{
+	background-color:#c5d5bd;
+}
+
+.theme-blue{
+	background-color:#e1f5fe;
+	color:#01579b;
+}
+/*
+.theme-blue .talkcontent p{
+	background-color:#d3ecec;
+	color:#01579b;
+}
+*/
+.theme-blue .control-statusbar button{
+	background-color:#d3ecec;
+}
+.theme-dark,.theme-dark:hover,.theme-dark:focus{
+	background-color:#1a1c23;
+	color:#c6c7c8;
+}
+/*
+.theme-dark .talkcontent p{
+	background-color:#363f46;
+	color:#c6c7c8;
+}
+*/
+.theme-dark .talkcontent .name{
+	color:#969696;
+}
+.theme-dark .control-statusbar button{
+	background-color:#363f46;
+	color:#c6c7c8;
+}
+.theme-dark .cosplay .inputDiv{
+	background-color:#363f46;
+}
+.theme-dark .cosplay .inputDiv .TextEditor{
+	background-color:#c6c7c8;
+	color:#363f46;
+}
+.theme-dark .discription .num:empty, .theme-dark .talk .num:empty{
+	background-color:#666;
+	border-color:#333;
+}
+.theme-dark .footer a{
+	color:#c6c7c8;
+}
+.theme-dark .footer .text-dark{
+	color:#c6c7c8;
+}
+.theme-dark .CommentPost .PostDiv input{
+	background-color:#c6c7c8;
+	color:#363f46;
+}
+.theme-dark .CommentPost .PostDiv textarea{
+	background-color:#c6c7c8;
+	color:#363f46;
+}
+.theme-lime{
+	background-color:#f9fbe7;
+	color:#827717;
+}
+.theme-grey{
+	background-color:#f5f5f5;
+	color:#212121;
+}
+
+@media screen and (max-width: 991px) {
+
+	.theme-pink .HuabenNavTop{
+		background-color:#fce4ec;
+		border-bottom: 1px solid #f5f5ee;
+	}
+	.theme-blue .HuabenNavTop{
+		background-color:#e1f5fe;
+		border-bottom: 1px solid #f5f5ee;
+	}
+	.theme-dark .HuabenNavTop{
+		background-color:#1a1c23;
+		border-bottom: 1px solid #f5f5ee;
+	}
+	.theme-dark .HuabenNavTop{
+		background-color:#1a1c23;
+		border-bottom:1px solid #363f46;
+	}
+	.theme-green .HuabenNavTop{
+		background-color:#e0f2f1;
+		border-bottom: 1px solid #f5f5ee;
+	}
+	.theme-white .HuabenNavTop{
+		background-color:#fff;
+		border-bottom: 1px solid #f5f5ee;
+	}
+
+}
+
+.chapterList p{
+	width:95%;
+	line-height:1.5rem;
+	font-size:0.8rem;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	padding-left:10px;
+	border-bottom:1px dashed #999;
+}
+
+.qrCode img{
+	width:200px;
+	height:200px;
+}
+
+.quitToolTip{
+	display:inline-block;
+	font-size:16px;
+	color:#fff;
+	background-color:#000;
+	padding:10px;
+	border-radius:5px;
+	max-width:80%;
+	z-index:999;
+}

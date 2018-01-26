@@ -1,0 +1,68 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>{{ no_user.nick_name }}的全部小说作品</title>
+{% endblock %}
+{% block container %}
+    <div class="container">
+        <div class="text-center">
+            <h3>&nbsp;</h3>
+            <img src="../../../../Banner/{{ no_user.image }}" class="img-circle" id="user_center_picurl" style="width: 80px;height: 80px;">
+            <em class="vip_icon_ol"></em>
+            <h3 class="text-center text-warning">你好，我是{{ no_user.nick_name }}，欢迎访问我的主页</h3>
+			<hr>
+		</div>
+        <div class="mybookslist">
+            {% for no_user_novel in num.object_list %}
+                <div class="searchresult">
+                    <div>
+                        <img class="img-rounded" src="../../../../Banner/{{ no_user.image }}">
+                        <p class="text-muted">
+                            <span class="text-muted">{{ no_user.nick_name }}</span>
+                            <small>{{ no_user_novel.novel_time|date:"Y-m-d H:i" }}</small>
+                        </p>
+                        <h1>
+                            <a href="{% url 'novel:book' no_user_novel.id %}" target="_blank" class="text-info">{{ no_user_novel.novel_name }}</a>
+                        </h1>
+                    </div>
+                    <div class="clearfix searchresult-info">
+                        <p>
+                            <a href="{% url 'novel:book' no_user_novel.id %}" target="_blank">{{ no_user_novel.novel_text }}</a>
+                        </p>
+                        <ul class="list-inline text-muted">
+                            <li>{{ no_user_novel.novel_next }}人看过</li>
+                            <li>&nbsp;</li>
+                        {% if no_user_novel.novel_tage.all %}
+                            <li>标签：</li>
+                            <li>
+                                <i class="text-muted">{% for tag in no_user_novel.novel_tage.all %}{{ tag }}  {% endfor %}</i>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    <!--用户小说作品的分页--->
+                <div class="text-center">
+                <div class="pagination">
+                <div class="btn-group">
+                {% if num.has_previous %}
+                    <a class="btn btn-default" a href="?{{ num.previous_page_number.querystring }}">«</a>
+                    {% endif %}
+                {% for page in num.pages %}
+                     {% if page %}
+                    {% ifequal page num.number %}
+                    <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                    {% else %}
+                    <a class="btn btn-default" href="?{{ page.querystring }}">{{ page }}</a>
+                    {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+                {% if num.has_next %}
+                    <a class="btn btn-default" href="?{{ num.next_page_number.querystring }}">»</a>
+                {% endif %}
+                </div>
+            </div>
+		</div>
+        <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>
+{% endblock %}

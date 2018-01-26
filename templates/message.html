@@ -1,0 +1,90 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>修改信息</title>
+{% endblock %}
+{% block js_cs %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'users/css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/js/plugins/queryCity/css/cityLayout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/lq.datetimepick.css' %}"/>
+    <script src="{% static 'users/js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'users/js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block center %}
+    {% load static %}
+    <div class="wp list personal_list">
+        <div class="left">
+            <ul>
+                <li >
+                    <a href="{% url 'users:usersiteup' %}">个人资料</a>
+                </li>
+                <li class="active2">
+                    <a href="{% url 'users:message' %}" style="position: relative;">我的消息</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="personal_des Releasecont">
+                <div class="head">
+                    <h1>我的消息</h1>
+                </div>
+            </div>
+            <div class="personal_des permessage">
+                <div class="head">
+                    <ul class="tab_header messagehead">
+                        <li class="active"><a href="{% url 'users:message' %}">个人消息</a></li>
+				    </ul>
+                </div>
+
+                <div class="messagelist">
+                    <div class="messages">
+                        {% for message in message.object_list %}
+                            <div class="fr" style="margin: 0;padding: 0;">
+                                <div class="top">
+                                    <span class="fl time">消息发送时间：{{ message.mess_time }}</span>
+                                    <span class="fr btn foldbtn"></span>
+                                </div>
+                                <h2>{{ message.mess_title }}</h2>
+                                <p>{{ message.mess_text }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="pageturn pagerright">
+                    <ul class="pagelist">
+                        {% if message.has_previous %}
+                            <li class="long">
+                                <a href="?{{ message.previous_page_number.querystring }}">上一页</a>
+                            </li>
+                        {% endif %}
+                        {% for page in message.pages %}
+                            {% if page %}
+                                {% ifequal page message.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% else %}
+                                <li class="none">
+                                    <a href="">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if message.has_next %}
+                            <li class="long">
+                                <a href="?{{ message.next_page_number.querystring }}">下一页</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+<div class="bg" id="dialogBg"></div>
+{% endblock %}
+{% block db_js %}
+    {% load staticfiles %}
+    <script src="{% static 'users/js/deco-user.js' %}"></script>
+{% endblock %}

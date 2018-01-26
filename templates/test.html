@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>使用post()方法以POST方式从服务器发送和获取数据</title>
+        <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="divtest">
+            <div class="title">
+                <span class="fl">检测数字是否大于0</span>
+                <span class="fr"><input id="btnCheck" type="button" value="检测" /></span>
+            </div>
+            <ul>
+               <li>请求输入一个数字 <input id="txtNumber" type="text" size="12" /></li>
+            </ul>
+        </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $("#btnCheck").bind("click", function () {
+                    ?
+                    ?
+                    ?
+                    function (data) {
+                        $("ul").append("<li>你输入的<b>  "
+                        + $("#txtNumber").val() + " </b>是<b> "
+                        + data + " </b></li>");
+                    });
+                })
+            });
+        </script>
+    </body>
+</html>

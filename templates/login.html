@@ -1,0 +1,29 @@
+﻿{% extends 'user_base.html' %}
+{% block base_title %}
+    <title>欢迎登陆|小白读书</title>
+{% endblock %}
+{% block base_count %}
+    <div class="login-container">
+        <h1>小白读书|会员登录</h1>
+        <div class="connect">
+            <p>登陆，马上读好书</p>
+        </div>
+        <form action="{% url 'users:dl' %}" method="post" id="loginForm">
+            <div>
+                <input type="text" name="username" class="username" placeholder="用户名" autocomplete="off"/>
+            </div>
+            <div>
+                <input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+            </div>
+            <button id="submit" type="submit">登 陆</button>
+            {% csrf_token %}
+        </form>
+        <a href="{% url 'users:zc' %}">
+            <button type="button" class="register-tis">还有没有账号？</button>
+        </a>
+        <br>
+        <a href="{% url 'users:zc' %}">
+            <button type="button" class="register-tis">忘记密码了？</button>
+        </a>
+    </div>
+{% endblock %}

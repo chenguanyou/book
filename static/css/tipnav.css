@@ -1,0 +1,299 @@
+.bgGround{
+	background-color:#000;
+  filter:alpha(opacity=20);
+  -moz-opacity:0.2;
+  -khtml-opacity: 0.2;
+  opacity: 0.2;
+	position:fixed;
+	bottom:340px;
+	left:0;
+	top:0;
+	right:0;
+	display:none;
+}
+.bottomTip{
+	background-color:#fff;
+	position:fixed;
+	bottom:0;
+	width:100%;
+  filter:alpha(opacity=95);
+  -moz-opacity:0.95;
+  -khtml-opacity: 0.95;
+  opacity: 0.95;
+	display:none;
+}
+
+.closeBtn{
+	position:absolute;
+	right:30px;
+	top:5px;
+	background-color:#999;
+	width:30px;
+	height:30px;
+	border-radius:15px;
+	color:#fff;
+	font-size:24px;
+	line-height:24px;
+	font-weight:normal;
+	padding-top:2px;
+	padding-left:6px;
+	cursor:pointer;
+}
+
+.bottomTip .container{
+	height:330px;
+	background-image:url(http://imgcn.ihuaben.com/images/u8.png);
+	background-repeat:no-repeat;
+	background-position:top right;
+	position:relative;
+}
+
+.bottomTip .blank{
+	height:10px;
+}
+
+.iconImg{
+	height:20px;
+}
+
+.qcode{
+	display:inline-block;
+	position:absolute;
+	top:100px;
+	left:350px;
+}
+
+.qcode p,.ioscode p{
+	margin-top:10px;
+}
+.qcode a span,.ioscode a span{
+	color:#e67451;
+	font-size:20px;
+	line-height:20px;
+	vertical-align:top;
+}
+
+.ioscode{
+	display:inline-block;
+	position:absolute;
+	top:100px;
+	left:550px;
+}
+
+.bottomTip .tip{
+	transform:rotate(-7deg);
+	-ms-transform:rotate(-7deg); 	/* IE 9 */
+	-moz-transform:rotate(-7deg); 	/* Firefox */
+	-webkit-transform:rotate(-7deg); /* Safari 鍜� Chrome */
+	-o-transform:rotate(-7deg); 	/* Opera */
+	display:inline-block;
+	position:absolute;
+	right:190px;
+	top:80px;
+}
+
+.bottomTip .tip h3{
+	color:#FF9900;
+	font-size:26px;
+	line-height:26px;
+	font-weight:700;
+	margin:0;
+	margin-bottom:10px;
+}
+.bottomTip .tip p{
+	color:#fff;
+}
+
+.rightBanner{
+	display:none;
+	position:fixed;
+	width:40px;
+	right:0;
+	top:0;
+	bottom:0;
+	border-left:1px solid #ddd;
+	background-color:#fff;
+}
+.rightBanner ul,.rightBanner li{
+	list-style:none;
+	padding:0;
+	margin:0;
+	text-align:center;
+}
+
+.rightBanner li i{
+	display:block;
+	font-size:24px;
+	margin-bottom:5px;
+}
+
+.rightBanner li{
+	color:#929292;
+	cursor:pointer;
+	margin-top:10px;
+	margin-bottom:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.rightBanner li:hover,.rightBanner li:focus{
+	color:#fff;
+	background-color:#ff9a6a;
+}
+
+.rightBanner .separator:hover,.rightBanner .separator:focus{
+	color:#929292;
+	background-color:#fff;
+	cursor:auto;
+}
+.rightBanner hr{
+	margin:5px;
+}
+
+.rightBanner .bottomList{
+	position:absolute;
+	bottom:0;
+	right:0;
+	left:0;
+}
+
+.rightBanner .topList{
+	margin-top:200px;
+}
+
+.qcodetip{
+	display:none;
+	position:absolute;
+	padding-left:15px;
+	padding-top:15px;
+	width:160px;
+	height:190px;
+	right:40px;
+	bottom:70px;
+	background-image:url(http://imgcn.ihuaben.com/images/qcodebg.png);
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+.qcodetip p{
+	width:116px;
+	margin:0;
+}
+.topButton{
+	display:none;
+	height:58px;
+}
+.topEmpty{
+	height:58px;
+	cursor:auto;
+}
+.rightBanner .topEmpty:hover,.rightBanner .topEmpty:focus{
+	background-color:#fff;
+	cursor:auto;
+}
+
+.feedbackDiv ul,.feedbackDiv li{
+	list-style:none;
+	padding:0;
+	margin:0;
+	text-align:center;
+}
+
+.feedbackDiv ul{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.feedbackDiv li{
+	background-color:#ddd;
+	border-radius:4px;
+	font-size:16px;
+	text-align:center;
+	padding:5px;
+	display:inline-block;
+	margin-left:5px;
+	margin-right:5px;
+	cursor:pointer;
+}
+.feedbackDiv .active{
+	background-color:#5bc0de;
+	color:#fff;
+}
+
+.feedbackDiv p{
+	margin-top:20px;
+	margin-bottom:10px;
+}
+
+.feedbackDiv textarea{
+	width:516px;
+	height:100px;
+	padding:5px;
+}
+.feedbackDiv input[type=number]{
+	width:516px;
+	padding:5px;
+}
+.feedbackDiv input[type=text]{
+	width:516px;
+	padding:5px;
+}
+.feedbackDiv input[type=submit]{
+	padding-left:20px;
+	padding-right:20px;
+}
+
+.appbanner{
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:2px;
+	margin-top:-4px;
+	width:100%;
+}
+
+.appbanner ul{
+	margin:0;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.appbanner .btn{
+	margin-top:5px;
+}
+.appbanner li{
+	vertical-align:middle;
+	padding:0;
+}
+
+.appbanner li h3{
+	margin:0;
+	margin-bottom:5px;
+	font-size:13px;
+	color:#777;
+	font-weight:700;
+}
+.appbanner li p{
+	font-size:12px;
+	margin:0;
+}
+.appbanner li img{
+	height:36px;
+	margin-right:5px;
+}
+.appbanner li .btn{
+	background-color:#f47216;
+	border-radius:14px;
+	font-size:13px;
+	line-height:17px;
+	color:#fff;
+	padding:4px 20px 4px 20px;
+	vertical-align:middle;
+}
+.appbanner2{
+	border-top:0;
+	margin:0;
+	background-color:#fff;
+	border-bottom:2px solid #eee;
+}
+.appbanner3{
+	border:0;
+	margin:0;
+	background-color:#fff;
+}

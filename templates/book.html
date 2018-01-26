@@ -1,0 +1,392 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>{{ Book_info.novel_name }}详情</title>
+    <meta name="Description" content="{{ Book_info.novel_text }}" />
+    <meta name="Keywords" content="{{ Book_info.novel_tag.tag_name }}" />
+{% endblock %}
+{% block cssjs %}
+{% load staticfiles %}
+    <link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dzscstyle.css' %}"/>
+    <link href="{% static 'css/smohanshare.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/firstchapter.css' %}" rel="stylesheet">
+    <link href="{% static 'css/newbook.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/reward.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/comment.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/userimage.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/cosplay.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block container %}
+    <!-- 小说的简介 -->
+    <div class="bgcontainer">
+        <svg>
+        <defs>
+            <filter id="f">
+            	<feImage id="svg_feImage" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../../../../Banner/{{ Book_info.novel_image }}" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></feImage>
+                <feGaussianBlur stdDeviation="30"></feGaussianBlur>
+            </filter>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" filter="url(#f)"></rect>
+    <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
+        </svg>
+    </div>
+    <div class="container" id="pc_bookinfo">
+		<div class="biginfo ">
+			<div class="cover">
+                <img src="../../../../Banner/{{ Book_info.novel_image }}">
+            </div>
+            <div class="infodetail">
+				<div class="simpleinfo">
+					<h1>
+						<h class="text-danger">{{ Book_info.novel_name }}</h>
+						<label class="bg-primary">{% if Book_info.novel_user.sign_bool == True %}已签约{% else %}未签约{% endif %}</label>
+						</h1>
+					<ul class="list-inline">
+						<li><a href="{% url 'users:nouser' Book_info.novel_user.id %}"><img class="img-circle" src="../../../../Banner/{{ Book_info.novel_user.image }}"></a></li>
+						<li><a href="{% url 'users:nouser' Book_info.novel_user.id %}" class="text-muted">{{ Book_info.novel_user.nick_name }}</a></li>
+					</ul>
+					<ul class="list-inline">
+						<li><i class="icon-file-alt"></i>&nbsp;{{ Book_info.novel_byte }}万字</li>
+						<li><i class="icon-eye-open"></i>&nbsp;<span lang="click_bar">{{ Book_info.novel_next }}</span></li>
+						<li><i class="icon-comment-alt"></i>&nbsp;<span id="sourceId::100144" class="cy_cmt_count">{{ Book_info.novel_comment }}</span></li>
+					</ul>
+					<ul class="list-inline" id="tagList">
+                        {% for tage in Book_info.novel_tage.all %}
+						<li class="tag" style="border-radius: 5px;"><ln class="text-muted" style="color:#fff;" target="_blank">{{ tage }}</ln></li>
+                        {% endfor %}
+					</ul>
+				</div>
+				<div class="text-muted aboutbook ">简介：{{ Book_info.novel_text }}</div>
+				<div class="bookButtons">
+                    <ul class="list-inline"><li class="">
+                {% if novel_num.chapter_num > 0 %}
+                    <a class="btn btn-lg btn-warning" href="{% url 'novel:text' novel_num.chapter_num %}">继续阅读</a>
+                {% else %}
+                    <a class="btn btn-lg btn-warning" href="{% for get_book_zj in Book_info.get_book_to %}{% url 'novel:text' get_book_zj.id %}{% endfor %}">{% if Book_info.is_long == True and request.user.id == None%}登陆可读{% else %}开始阅读{% endif %}</a>
+                {% endif %}
+                </li>
+                        <i class="{% if mig == 'wsc' %}heart{% else %}heart heartAnimation{% endif %}" id="like3" rel="{% if mig == 'wsc' %}like{% else %}unlike{% endif %}"></i>
+                        <li id="container">
+                            <p class="feed" id="feed1">收藏(<h class="likeCount" id="likeCount3">{{ Book_info.novel_fave }}</h>)</p>
+                        </li>
+                        <li class="share"><p><i class="icon-share"></i></p><p>分享</p></li>
+                        <li>
+                            <p>
+                                <i class="icon-download-alt"></i>
+                            </p><p>下载</p>
+                        </li>
+                </div>
+            </div>
+        </div>
+    <div class="fullDiv" id="mobile_havecover">
+        <div class="cover"></div>
+        <div class="infodetail havecover">
+            <div class="simpleinfo"></div>
+		</div>
+        <div class="text-muted aboutbook"></div>
+	</div>
+<div class="fullDiv text-center" id="mobile_nocover">
+    <div class="infodetail nocover">
+        <div class="simpleinfo"></div>
+    </div>
+    <div class="text-muted aboutbook text-left"></div>
+</div>
+<!-- 小说的目录 -->
+<div class="fullDiv BookInfoList">
+		<div class="chapters visible-md-inline-block visible-lg-inline-block">
+			<h2>目录
+				<small class="pull-right chapterSort">
+				<a href="{% url 'novel:book' Book_info.id %}?sortType={% if msg == 'dx' %}0{% else %}1{% endif %}" class="text-muted"><i class="icon-double-angle-down"></i>{% if msg == "dx" %}正序{% else %}倒序{% endif %}</a>
+				</small>
+			</h2>
+            <div>
+                {% for book_list in Book_text.object_list %}
+                    <p>
+                        <span class="text-muted number">{{ book_list.novelchapter_num }}</span>
+                        <span class="chapterTitle"><a href="{% url 'novel:text' book_list.id %}" title="{{ book_list.novelchapter_name }}" >{{ book_list.novelchapter_name }}</a></span>
+                        <span class="text-muted pull-right updateTime">{% if datetimes == book_list.novelchapter_time|date:"Y-m-d" %}今天 {{ book_list.novelchapter_time|date:"H:i" }}{% else %}{{ book_list.novelchapter_time|date:"Y-m-d H:i" }}{% endif %}</span>
+                    </p>
+                {% endfor %}
+            </div>
+        <!-- 小说的分页 -->
+            <div class="text-center">
+                <div class="pagination">
+                <div class="btn-group">
+                {% if Book_text.has_previous %}
+                    <a class="btn btn-default" a href="?{{ Book_text.previous_page_number.querystring }}">«</a>
+                    {% endif %}
+                {% for page in Book_text.pages %}
+                     {% if page %}
+                    {% ifequal page Book_text.number %}
+                    <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                    {% else %}
+                    <a class="btn btn-default" href="?{{ page.querystring }}">{{ page }}</a>
+                    {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+                {% if Book_text.has_next %}
+                    <a class="btn btn-default" href="?{{ Book_text.next_page_number.querystring }}">»</a>
+                {% endif %}
+                </div>
+            </div>
+		</div>
+      </div>
+    <!-- 小说的推荐 -->
+    <div class="Comment">
+        <!-- 评论框 -->
+    <div data-reactid=".0">
+        <div class="Container CommentPost">
+            <div class="CommentPostTop" >
+                <h2>发表评论</h2>
+            </div>
+            <div class="PostDiv">
+                <div class="title">
+                    <input type="text" id="bttext" placeholder="评论标题" value="">
+                </div>
+                <div class="content">
+                    <textarea class="reactEdit" id="pl_count" placeholder="随意发言，在这里，想开车就开车，嘟嘟嘟..."></textarea>
+                </div>
+                <div class="btn-space">
+                    <button class="btn btn-default">
+                        <i class="icon-github-alt"></i><span> </span>
+                        <span>插入表情</span>
+                    </button>
+                    <button class="btn btn-info pull-right" id="pl-pull-right">{% if request.user.id == None %}登陆{% else %}发布{% endif %}</button>
+                </div>
+            </div>
+        </div>
+        <!-- 评论框结束 -->
+        <!-- 评论内容 -->
+        {% for user_info in user_info %}
+            <ul class="HuabenListUL CommentUL">
+                <li class="CommentUser">
+                    <p class="text-center">
+                        <a href="{% url 'users:nouser' user_info.user_id.id %}">
+                            <img src="../../../../Banner/{{ user_info.user_id.image }}" class="userPic">
+                        </a>
+                    </p>
+                    <p class="text-center">
+                        <a href="{% url 'users:nouser' user_info.user_id.id %}" class="userNickName">{{ user_info.user_id.nick_name }}</a>
+                    </p>
+                </li>
+                <li class="CommentRight">
+                    <div class="CommentTitle">{{ user_info.commtitle }}</div>
+                    <div class="CommentContent" style="min-height: 80px; padding: 10px 0 5px 10px; color: #000;">
+                        <div class="discription">
+                            <p class="dp">{{ user_info.comment }}</p>
+                        </div>
+                    </div>
+                    <ul class="HuabenListUL CommentBottomNav text-right">
+                        <li class="CommentUpdateTime">
+                            <p class="text-lightgrey">{{ user_info.comment_data }}</p>
+                        </li>
+{#                        <li>#}
+{#                            <button>#}
+{#                                <i class="comment-heart-empty"></i><span >赞(</span><span>2</span><span>)</span>#}
+{#                            </button>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <button>#}
+{#                                <i class="comment-comments-alt"></i><span>回复(</span><span>0</span><span>)</span>#}
+{#                            </button>#}
+{#                        </li>#}
+                    </ul>
+                </li>
+            </ul>
+        {% endfor %}
+        <div class="text-center CommentLoading" >
+            <button class="btn" id="more" data-status="1" >加载更多</button>
+            <input type="hidden" id="page111" value="2">
+        </div>
+        <div class="CommentBottomToolbar">
+            <button class="CommentTop">
+                <i class="icon-angle-up"></i>
+            </button>
+            <button class="CommentPostButton">
+                <i class="icon-edit"></i>
+            </button></div></div></div><div class="RankRight">
+        <!-- 评论内容结束 -->
+    <!-- 推荐开始 -->
+    <div class="fansBoard hidden-md hidden-xs">
+        <h2>推荐</h2>
+        <div lang="rankingData_tj">
+            {% for book_all in book_all %}
+                {% if forloop.counter < 5 %}
+                    <div class="hotList">
+                        <a href="{% url 'novel:book' book_all.id %}" target="_blank" class="text-dark">
+                            <img class="img-rounded" src="../../../../Banner/{{ book_all.novel_image }}">
+                            <span class="order"><span class="no">{{ forloop.counter }}</span></span>
+                        </a>
+                        <div>
+                            <h4><a href="{% url 'novel:book' book_all.id %}" target="_blank" class="text-dark">{{ book_all.novel_name }}</a></h4>
+                            <p class="text-lightgrey text-left">{{ book_all.novel_byte }}字</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="fansList">
+                        <label>{{ forloop.counter }}</label>
+                        <span class="nickName"><a href="{% url 'novel:book' book_all.id %}" target="_blank" class="text-dark">{{ book_all.novel_name }}</a></span>
+                        <span class="pull-right text-muted">{{ book_all.novel_byte }}字</span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block db_js %}
+    <script type="text/javascript">
+    //收藏
+    function add_fav(current_elem, fav_id, fav_type){
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url:"{% url 'novel:addfave' %}",
+            data:{'fav_id':fav_id, 'fav_type':fav_type},
+            async: true,
+            beforeSend:function(xhr, settings){
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+        });
+    }
+    //获取用户ID，和书的ID传递给服务端
+    $('#like3').on('click', function(){
+        {% if request.user.id == None %}
+            alert("您还未登录不能收藏哟")
+            window.location.href="{% url 'users:dl' %}";
+        {% else %}
+             add_fav($(this), {{ Book_info.id }}, {{ request.user.id }});
+        {% endif %}
+    });
+    //收藏的动画
+    $(document).ready(function()
+        {
+    $('body').on("click",'.heart',function()
+        {
+        var A=$(this).attr("id");
+        var B=A.split("like");
+        var messageID=B[1];
+        var C=parseInt($("#likeCount"+messageID).html());
+        $(this).css("background-position","")
+        var D=$(this).attr("rel");
+
+        if(D === 'like')
+        {
+        $("#likeCount"+messageID).html(C+1);
+        $(this).addClass("heartAnimation").attr("rel","unlike");
+        }
+        else
+        {
+        $("#likeCount"+messageID).html(C-1);
+        $(this).removeClass("heartAnimation").attr("rel","like");
+        $(this).css("background-position","left");
+        }
+    });
+    });
+    $(function(){
+    var tags = $(".tag");
+    for(var i = 0; i < tags.length ;i++){
+        var r = Math.floor(Math.random()*355);
+        var g = Math.floor(Math.random()*55);
+        var b = Math.floor(Math.random()*155);
+        var a = Math.random();
+
+        $(tags[i]).css('background-color','rgb'+'('+r+','+g+','+b+')');
+      }
+    })
+    </script>
+    <script type="text/javascript">
+        //添加用户的评论
+        $('#pl-pull-right').on('click', function(){
+            {% if request.user.id == None %}
+                window.location.href="{% url 'users:dl' %}";
+            {% else %}
+            var comments = $("#pl_count").val()
+            var commtitle = $('#bttext').val()
+            if(commtitle == ""){
+                alert("评论标题不能为空")
+                return
+            }
+            if(comments == ""){
+                alert("评论不能为空")
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url:"{% url 'users:comment' %}",
+                data:{'book_id':{{ Book_info.id }}, 'comment':comments, 'commtitle':commtitle, 'user_id':{{ request.user.id }}},
+                async: true,
+                beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function(data) {
+                    if(data.status == 'fail'){
+                        if(data.msg == '用户未登录'){
+                            window.location.href="{% url 'users:dl' %}";
+                        }else{
+                            alert(data.msg)
+                        }
+
+                    }else if(data.status == 'success'){
+                        window.location.reload();//刷新当前页面.
+                    }
+                },
+            });
+            {% endif %}
+        });
+    </script>
+    <script>
+    //评论加载---->这个功能还没有完成
+    $(function () {
+       $("#more").click(function () {
+           var page = parseInt($("#page111").val());
+
+           $(this).html("加载中...");
+
+           status=$(this).attr("data-status");
+           if(status==1) {
+               status = $(this).attr("data-status", "0");
+               $.ajax({
+                   type: "post",
+                   url: "{% url 'novel:pingview' %}",
+                   data:{'bookid':{{ Book_info.id }},'page':page},
+                   dataType: "Html",
+                   beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                   success: function (data) {
+                       data = data.data;
+                       /*数据不够10条隐藏按钮*/
+                       if (data.length < 10) {
+                            alert(data);
+                           $(this).hide()
+                       } else {
+                           $("#page111").val(page + 1);//记录页码
+                       }
+                       insertDiv(data);
+                   }
+
+               });
+           }
+
+       });
+   });
+       function insertDiv(data){
+           var information = $(".btn");
+           var html = '';
+           for (var i = 0; i < fields.length; i++) {
+               html +="<div>"+fields[i].comment_data+"</div>"+"<div>"+fields[i].comment_data+"</div>";
+           }
+           information.append(html);
+           $("#more").html("加载更多");
+           $("#more").attr("data-status","1");
+       }
+           //评论加载---->这个功能还没有完成
+    </script>
+{% load staticfiles  %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/smohan.pop&share.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/qrcode.min.js' %}"></script>
+{% endblock %}

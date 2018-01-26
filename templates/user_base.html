@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+{% block base_title%}<title>欢迎注册|小白读书</title>{% endblock %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<body>
+{% block base_count %}
+<div class="register-container">
+	<h1>小白读书|会员注册</h1>
+
+	<div class="connect">
+		<p>在这里, 每天多读一点</p>
+	</div>
+
+	<form action="{% url 'users:zc' %}" method="post" id="registerForm">
+		<div>
+			<input type="text" name="username" class="username" placeholder="您的用户名" autocomplete="off"/>
+		</div>
+		<div>
+			<input type="password" name="password" class="password" placeholder="输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<div>
+			<input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码" oncontextmenu="return false" onpaste="return false" />
+		</div>
+		<div>
+			<input type="text" name="phone_number" class="phone_number" placeholder="输入手机号码" autocomplete="off" id="number"/>
+		</div>
+		<div>
+			<input type="email" name="email" class="email" placeholder="输入邮箱地址" oncontextmenu="return false" onpaste="return false" />
+		</div>
+
+		<button id="submit" type="submit">注 册</button>
+        {% csrf_token %}
+	</form>
+	<a href="{% url 'users:dl' %}">
+		<button type="button" class="register-tis">已经有账号？</button>
+	</a>
+
+</div>
+{% endblock %}
+
+</body>
+<script src="{% static 'js//jquery.min.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{%  static 'js/supersized.3.2.7.min.js' %}"></script>
+<script src="{%  static 'js/supersized-init.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+</html>

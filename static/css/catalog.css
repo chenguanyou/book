@@ -1,0 +1,194 @@
+	.catalogList{
+		margin:0 auto;
+		margin-top:30px;
+		background-color:#f0f0f0;
+		padding:20px 60px 20px 60px;
+	}
+	.catalogList div:nth-child(1){
+		background-color:#fff;
+		padding:20px 35px 20px 35px;
+	}
+	.catalogList ul{
+		padding:0;
+		margin:0;
+	}
+	.catalogList li{
+		vertical-align:middle;
+	}
+	.catalogList ul li:nth-child(1){
+		color:#999;
+		line-height:30px;
+		margin-right:20px;
+	}
+	.catalogList li a{
+		color:#666;
+		min-width:50px;
+		height:30px;
+		display:inline-block;
+		text-align:center;
+		line-height:30px;
+		padding-left:5px;
+		padding-right:5px;
+	}
+	.catalogList li .active{
+		background-color:#aeaeae;
+		color:#fff;
+		border-radius:5px;
+	}
+	.catalogList hr{
+		margin:10px 10px 10px 60px;
+	}
+	.booklist{
+		text-align:center;
+		margin:30px 0 10px 0;
+	}
+
+.booklist .suggestTitle{
+	margin-bottom:20px;
+}
+.booklist .suggestCover{
+	width:180px;
+  -webkit-box-shadow:0 0 10px #666;
+  -moz-box-shadow:0 0 10px #666;
+  box-shadow:0 0 10px #666;
+}
+.booklist li{
+	text-align:left;
+	padding:0;
+	margin-left:20px;
+	margin-right:20px;
+	margin-bottom:20px;
+}
+.booklist .hsuggestsLeft{
+	width:140px;
+	display:inline-block;
+	vertical-align:top;
+}
+.booklist .hsuggestsRight{
+	display:inline-block;
+	vertical-align:top;
+}
+.booklist .hsuggestsRight img{
+	width:26px;
+	height:26px;
+}
+.booklist .hsuggestsLeft h3{
+	font-size:14px;
+	line-height:20px;
+	font-weight:600;
+	margin:0;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.booklist .hsuggestsLeft h3 a{
+	color:#333;
+}
+.booklist .hsuggestsLeft p{
+	font-size:13px;
+	margin:2px 0 5px 0;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+.booklist .hsuggestsIcon{
+	margin-right:10px;
+}
+.booklist .hsuggestsIcon i{
+	margin-right:5px;
+}
+
+.catalogList .sublist{
+	margin:0;
+	padding:0;
+	display:block;
+}
+.catalogList .sublist ul{
+		margin-left:62px;
+		margin-top:-30px;
+}
+
+.catalogList .sublist li:nth-child(1){
+	margin-right:0;
+}
+
+@media screen and (max-width: 991px){
+	.catalogList{
+		padding:0;
+		margin-top:10px;
+		border-bottom:10px solid #f0f0f0;
+	}
+	.catalogList div:nth-child(1){
+		padding:10px;
+	}
+	.catalogList li{
+		padding:0;
+	}
+	.catalogList ul li:nth-child(1){
+		margin-right:10px;
+	}
+	.catalogList li a{
+		min-width:46px;
+	}
+	.catalogList hr{
+		margin-left:40px;
+	}
+
+	.catalogList .sublist ul{
+			margin-left:42px;
+	}
+
+	.booklist{
+		margin-top:20px;
+	}
+	.booklist .suggestCover{
+		width:90px;
+		margin-right:5px;
+		-webkit-box-shadow:none;
+		-moz-box-shadow:none;
+		box-shadow:none;
+	}
+	.booklist li{
+		display:block;
+		margin:10px 0 20px 0;
+	}
+	.booklist>li>p{
+		display:inline-block;
+		float:left;
+	}
+	.booklist .hsuggestsRight{
+		display:none;
+	}
+	.booklist .hsuggestsLeft{
+		display:block;
+		height:121px;
+		width:auto;
+		margin-left:100px;
+		border-bottom:1px solid #eee;
+	}
+	.booklist .hsuggestsLeft h3{
+		width:auto;
+		font-size:14px;
+		line-height:20px;
+		margin-bottom:10px;
+	}
+	.booklist .hsuggestsLeft p{
+		margin-top:0;
+		margin-bottom:5px;
+		padding:0;
+	}
+	.booklist li div[class='text-lightgrey']{
+		display:none;
+	}
+	.booklist .taglist{
+		margin-left:45px;
+		margin-top:-2px;
+	}
+	.booklist .taglist li{
+		display:inline-block;
+		margin:0;
+	}
+	.booklist .text-lightgrey{
+		font-size:14px;
+	}
+}

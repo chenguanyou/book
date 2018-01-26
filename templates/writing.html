@@ -1,0 +1,384 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>{{ request.user.nick_name }}的写作后台</title>
+    <meta name="Description" content="{{ request.user.nick_name }}的写作后台" />
+    <meta name="Keywords" content="{{ request.user.nick_name }}的写作后台" />
+{% endblock %}
+{% block cssjs %}
+{% load staticfiles %}
+    <link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dzscstyle.css' %}"/>
+    <link href="{% static 'css/smohanshare.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/firstchapter.css' %}" rel="stylesheet">
+    <link href="{% static 'css/newbook.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/reward.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/comment.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/userimage.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/cosplay.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block container %}
+	<style>
+		.adTextBanner{
+			margin:0;
+			margin-bottom:10px;
+			background-color:#f5f4ef;
+			border-radius:5px;
+			padding: 20px;
+			font-size:16px;
+			display:none;
+		}
+		.adTextBanner a{
+			color:#e05a1a;
+		}
+		.closeAdButton{
+			margin-top:-2px;
+		}
+	</style>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 text-center">
+				<h2>我的作品</h2>
+				<div class="list-group" id="book_bar">
+                    {% for user_book in user_book %}
+					<a href="javascript:;" rel="{{ user_book.id }}" class="list-group-item">{{ user_book.novel_name }}</a>
+                    {% endfor %}
+
+				</div>
+			</div>
+
+
+
+			<div class="col-md-9">
+				<h2 class="pull-right hidden-xs">
+						<a href="/book/createBookPage" class="btn btn-info">创建作品</a>
+						<a href="javascript:updateBookGo();" class="btn btn-info">作品设置</a>
+						<a href="javascript:characterGo();" class="btn btn-info">角色管理</a>
+						<a href="javascript:chapterGo();" class="btn btn-danger">新建章节</a>
+					</h2>
+					<h2 class="text-center visible-xs-block">
+						<p class="btn-group">
+							<a href="/book/createBookPage" class="btn btn-info">创建作品</a>
+							<a href="javascript:updateBookGo();" class="btn btn-info">设置</a>
+							<a href="javascript:characterGo();" class="btn btn-info">角色</a>
+							<a href="javascript:chapterGo();" class="btn btn-danger">新建章节</a>
+						</p>
+					</h2>
+				<table class="table">
+					<caption></caption>
+					<thead>
+						<tr>
+							<th>章节列表</th>
+							<th>创建时间</th>
+							<th class="col-md-2">操作</th>
+						<iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></tr>
+					</thead>
+					<tbody id="data_bar"><tr><td><a href="http://www.ihuaben.com/book/746773/8056228.html" target="_blank"><span class="text-muted">2</span>&nbsp;书的名字2</a><i class="icon-ok-sign text-success" title="已经发布"></i></td><td>2018-01-11 00:51</td><td><span class="text-muted"><i class="icon-pencil"></i><a href="javascript:chapterGo(8056228);">修改</a></span><span>&nbsp;&nbsp;</span></td></tr><tr><td><a href="http://www.ihuaben.com/book/746773/8056226.html" target="_blank"><span class="text-muted">1</span>&nbsp;第一章</a><i class="icon-ok-sign text-success" title="已经发布"></i></td><td>2018-01-11 00:50</td><td><span class="text-muted"><i class="icon-pencil"></i><a href="javascript:chapterGo(8056226);">修改</a></span><span>&nbsp;&nbsp;</span></td></tr></tbody>
+				</table>
+				<nav class="text-center" id="page_bar">
+
+			   </nav>
+			</div>
+		</div>
+	</div>
+	 <div id="popup-captcha" style="display: none;" class="geetest_touch_alert"></div>
+	 <input type="button" style="display: none;" id="popup-submit">
+
+	<script src="http://static.geetest.com/static/tools/gt.js"></script>
+	<script type="text/javascript">
+			var pageSize = 20;
+			var pageNo = 1;
+			var loadPage = function(pageNo){
+				var bookId = $("a.list-group-item.active").attr("rel");
+				if(!bookId)
+					return;
+				var pama = {"page":pageNo,"pageSize":pageSize,"bookId":{{ csrf_token }},};
+				$.post("{% url 'users:writinghome' %}",pama,function(data){
+					var pageUtil = data.pages;
+					//var token = xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+					var html = new Array();
+					$.each(pageUtil.pageList,function(i,e){
+						html.push("<tr>");
+						var url = "http://www.ihuaben.com/book/"+bookId+"/"+e.chapterId+".html";
+						if(navigator.userAgent.match(/\- HuabenApp/ig))
+							url = "ihuaben://read/"+bookId+"/"+e.chapterId;
+						if(e.status=="PUBLISHED"){
+							html.push("<td><a href='"+url+"' target='_blank'><span class='text-muted'>"+e.marks.index+"</span>&nbsp;"+e.title+"</a><i class='icon-ok-sign text-success' title='已经发布'></i></td>");
+						}else{
+							if(e.fixedTime!=null)
+								html.push("<td><a href='"+url+"' target='_blank'><span class='text-muted'>"+e.marks.index+"</span>&nbsp;"+e.title+"</a><i class='icon-time text-danger' title='定时发布'></i></td>");
+							else
+								html.push("<td><span class='text-muted'>"+e.marks.index+"</span>&nbsp;"+e.title+"</td>");
+						}
+						html.push("<td>"+e.marks.createTime+"</td>");
+						html.push("<td>");
+						html.push("<span class='text-muted'>");
+						html.push("<i class='icon-pencil'></i><a href='javascript:chapterGo("+e.chapterId+");'>修改</a></span><span>");
+						html.push("&nbsp;&nbsp;");
+						if(e.status=="DRAFT")
+							html.push("<i class='icon-external-link'></i><a href='javascript:publish("+e.chapterId+");'>发布</a></span>");
+						html.push("</td>");
+						html.push("</tr>");
+					});
+					$("#data_bar").html(html.join(""));
+					pageInit(pageUtil);
+				},"json")
+			}
+
+
+			var pageInit = function(page){
+				if(page.count==0||page.totalPageNum==1)
+					return;
+				var pageBorder_Str="<ul class='pagination'>";
+				if(page.hasPreviousPage=='true')
+					pageBorder_Str+="<li><a href=\"javascript:loadPage('"+page.previousPageNum+"');\"  aria-label='Previous'  ><span aria-hidden='true'>«</span></a></li>";
+				$.each(page.pageLimitList,function(i,e){
+					pageBorder_Str+="<li ";
+				    if(page.currentPageNum==e)
+					   pageBorder_Str+="class='active' "
+					pageBorder_Str+=" > <a href=\"javascript:loadPage('"+e+"');\">"+e+"</a></li>";
+				})
+				if(page.hasNextPage=='true')
+					pageBorder_Str+="<li><a href=\"javascript:loadPage('"+page.nextPageNum+"');\" class='next' >»</a></li>";
+				$("#page_bar").html(pageBorder_Str);
+			}
+			loadPage(pageNo);
+
+			$("#book_bar > a").click(function(){
+				$("#book_bar > a").removeClass();
+				$("#book_bar > a").addClass("list-group-item");
+				$(this).addClass("active");
+				pageNo=1;
+				$("#page_bar").html("");
+				loadPage(pageNo);
+			});
+			var width = window.innerWidth || document.documentElement.clientWidth;
+			var plan = width<960?"MOBILE":"PC";
+			var validate = null;
+			var isSub = false;
+			var chapterId;
+			var initGee = function(){
+				$("#popup-captcha").html("");
+				$.ajax({async:false,url:'http://passport.ihuaben.com/api/vcode/init?plan='+plan+'&r='+new Date().getTime(),dataType:'jsonp',type: 'GET',jsonp:'callback',success: function(data){
+					initGeetest({
+			            gt: data.gt,
+			            challenge: data.challenge,
+			            product: "popup",
+			            offline: !data.success
+			        }, function (captchaObj) {
+				        $("#popup-captcha").show();
+				        $("#popup-captcha").html("");
+				        captchaObj.appendTo("#popup-captcha");
+				        captchaObj.onReady(function(){
+				        	captchaObj.bindOn("#popup-submit");
+				        	$("#popup-submit").click();
+				        	isSub = false;
+				        });
+				        captchaObj.onSuccess(function(){
+				        	validate = captchaObj.getValidate();
+				        	publish(chapterId);
+				        });
+				    });
+				}});
+			}
+			var publish = function(cId){
+				chapterId = cId;
+				if(isSub)
+					return;
+				isSub = true;
+				var url = "/book/saveChapter";
+				var pama = {"bookId":$("a.list-group-item.active").attr("rel"),"chapterId":chapterId,"status":"PUBLISHED"};
+				pama.plan = plan;
+				if(validate){
+					pama.geetest_challenge=validate.geetest_challenge;
+					pama.geetest_validate=validate.geetest_validate;
+					pama.geetest_seccode=validate.geetest_seccode;
+				}
+				$.post(url,pama,function(data){
+					isSub = false;
+					if(data.code==0){
+						loadPage(pageNo);
+					}else if(data.code==2){
+						isSub = true;
+						initGee();
+					}else{
+						alert("发布失败:"+data.msg);
+					}
+				});
+			}
+			var characterGo = function(){
+				var bookId = $("a.list-group-item.active").attr("rel");
+				if(!bookId){
+					alert("请先创建书籍");
+					return;
+				}
+				window.location.href="/character/book?bookId="+bookId;
+			}
+			var chapterGo = function(chapterId){
+				var bookId = $("a.list-group-item.active").attr("rel");
+				if(!bookId){
+					alert("请先创建书籍");
+					return;
+				}
+				var url = "/book/createChapterPage?bookId="+bookId;
+				if(chapterId)
+					url += "&chapterId="+chapterId;
+				window.location.href=url;
+			}
+			var updateBookGo = function(){
+				var bookId = $("a.list-group-item.active").attr("rel");
+				if(!bookId){
+					alert("请先创建书籍");
+					return;
+				}
+				window.location.href="/book/createBookPage?bookId="+bookId;
+			}
+			var qq = "";
+			var isAlertQQ = localStorage.getItem("isAlertQQ");
+			if(!qq&&!isAlertQQ){
+				localStorage.setItem("isAlertQQ",true);
+				var qqcontent = new Array();
+				qqcontent.push("<div id='qqPanel' >");
+				qqcontent.push("<div class='form-group'>");
+				qqcontent.push("<p>&nbsp;</p>");
+	 			qqcontent.push("<h1 class='text-center'>请填写QQ号，方便为您服务</h1>");
+				qqcontent.push("<p>&nbsp;</p>");
+				qqcontent.push("<p>");
+				qqcontent.push("<input type='number' name='qq' class='form-control input-lg' placeholder='请填写您的QQ号'/>");
+				qqcontent.push("</p>");
+				qqcontent.push("<p>&nbsp;</p>");
+				qqcontent.push("<p class='text-center'>");
+				qqcontent.push("<input type='button' onclick='updateQQ();' class='btn btn-lg btn-info' value='提  交'/>");
+				qqcontent.push("</p>");
+				qqcontent.push("</div>");
+				qqcontent.push("</div>");
+				$.dialog({
+					title:"",
+					content:qqcontent.join('')
+				});
+			}
+
+			var updateQQ = function(){
+				qq = $("input[name=qq]").val();
+				if(!qq.match(/^[0-9]{3,20}$/)){
+					alert("qq格式不正确");
+					return;
+				}
+				var url = "http://user.ihuaben.com/user/updateQQ?qq="+qq;
+				$.ajax({async:false,url: url,dataType:'jsonp',type: 'GET',jsonp:'callback',success: function(data){
+					if(data.code==0){
+						window.location.reload(true);
+					}
+				}});
+			}
+		</script>
+{% endblock %}
+{% block db_js %}
+    <script type="text/javascript">
+    //收藏
+    function add_fav(current_elem, fav_id, fav_type){
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url:"{% url 'novel:addfave' %}",
+            data:{'fav_id':fav_id, 'fav_type':fav_type},
+            async: true,
+            beforeSend:function(xhr, settings){
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+        });
+    }
+    //获取用户ID，和书的ID传递给服务端
+    $('#like3').on('click', function(){
+        {% if request.user.id == None %}
+            alert("您还未登录不能收藏哟")
+            window.location.href="{% url 'users:dl' %}";
+        {% else %}
+             add_fav($(this), {{ Book_info.id }}, {{ request.user.id }});
+        {% endif %}
+    });
+    //收藏的动画
+    $(document).ready(function()
+        {
+    $('body').on("click",'.heart',function()
+        {
+        var A=$(this).attr("id");
+        var B=A.split("like");
+        var messageID=B[1];
+        var C=parseInt($("#likeCount"+messageID).html());
+        $(this).css("background-position","")
+        var D=$(this).attr("rel");
+
+        if(D === 'like')
+        {
+        $("#likeCount"+messageID).html(C+1);
+        $(this).addClass("heartAnimation").attr("rel","unlike");
+        }
+        else
+        {
+        $("#likeCount"+messageID).html(C-1);
+        $(this).removeClass("heartAnimation").attr("rel","like");
+        $(this).css("background-position","left");
+        }
+    });
+    });
+    $(function(){
+    var tags = $(".tag");
+    for(var i = 0; i < tags.length ;i++){
+        var r = Math.floor(Math.random()*355);
+        var g = Math.floor(Math.random()*55);
+        var b = Math.floor(Math.random()*155);
+        var a = Math.random();
+
+        $(tags[i]).css('background-color','rgb'+'('+r+','+g+','+b+')');
+      }
+    })
+    </script>
+    <script type="text/javascript">
+        //添加用户的评论
+        $('#pl-pull-right').on('click', function(){
+            {% if request.user.id == None %}
+            alert("您还未登录不能评论哟")
+            window.location.href="{% url 'users:dl' %}";
+            {% else %}
+            var comments = $("#pl_count").val()
+            var commtitle = $('#bttext').val()
+            if(commtitle == ""){
+                alert("评论标题不能为空")
+                return
+            }
+            if(comments == ""){
+                alert("评论不能为空")
+                return
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url:"{% url 'users:comment' %}",
+                data:{'book_id':{{ Book_info.id }}, 'comment':comments, 'commtitle':commtitle, 'user_id':{{ request.user.id }}},
+                async: true,
+                beforeSend:function(xhr, settings){
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function(data) {
+                    if(data.status == 'fail'){
+                        if(data.msg == '用户未登录'){
+                            window.location.href="{% url 'users:dl' %}";
+                        }else{
+                            alert(data.msg)
+                        }
+
+                    }else if(data.status == 'success'){
+                        window.location.reload();//刷新当前页面.
+                    }
+                },
+            });
+            {% endif %}
+        });
+    </script>
+{% load staticfiles  %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/smohan.pop&share.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/qrcode.min.js' %}"></script>
+{% endblock %}

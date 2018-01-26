@@ -1,0 +1,34 @@
+.recommend .title{
+	font-size: 18px;
+	color: #595959;
+	font-family: 'Microsoft YaHei';
+	font-weight: 100;
+	padding: 5px 20px 20px 5px;
+}
+.recommend .rbooks{
+	margin-top: 30px;
+	clear: both;
+}
+.recommend h1{
+	font-size: 18px;
+	margin-top: 0;
+	overflow: hidden;
+}
+.recommend h2{
+	font-size: 14px;
+	margin-top:5px;
+	overflow: hidden;
+}
+.recommend .download{
+	font-size: 12px;
+	display:inline-block;
+	color: red;
+	font-weight:100;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+}
+.recommend .book{
+	margin-top: 20px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 20px;
+}

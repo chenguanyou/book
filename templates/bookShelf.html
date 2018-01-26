@@ -1,0 +1,127 @@
+{% extends 'bast.html' %}
+{% block title %}
+    <title>我的收藏</title>
+    <meta name="Description" content="我的收藏简介" />
+    <meta name="Keywords" content="我的收藏关键字" />
+{% endblock %}
+{% block cssjs %}
+    {% load staticfiles %}
+    <link href="{% static 'css/bootscript.css'%}" rel="stylesheet"/>
+    <link href="{% static 'css/index.css' %}?v=20171115" rel="stylesheet"/>
+    <link href="{% static 'css/tipnav.css' %}?v=20160818" rel="stylesheet"/>
+    <script type="text/javascript" src="{% static 'js/jquery-1.12.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-confirm.js' %}?v=20160718"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}
+{% block container %}
+    {% load staticfiles %}
+    <div class="container">
+        <ul class="nav nav-tabs" id="check_meun">
+            <li class="active">
+                <a href="{% url 'users:userfave' %}">我的收藏</a>
+            </li>
+            <li>
+                <a href="{% url 'users:userread' %}">阅读记录</a>
+            </li>
+        </ul>
+
+        {% if msg == "no" %}
+            <div>
+			<p>&nbsp;</p>
+                <h2 class="text-center text-danger">没有收藏记录</h2>
+			<p>&nbsp;</p>
+                <p class="text-center">
+                    <img src="{% static 'images/find.png' %}">
+                    <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
+                </p>
+			</div>
+        {% else %}
+            <div id="bookrecord_list">
+                <div class="historylist">
+                    <nav>
+                        <div>
+                            <h4 class="text-muted">
+                                <i class="icon-calendar">
+                                </i>&nbsp;&nbsp;喜欢收藏的人，都很酷
+                            </h4>
+                        </div><br><br>
+                    </nav>
+                    {% for fave in fave.object_list %}
+                        <div class="clearfix">
+                            <div class="bookshelfinfo">
+                                <div class="bookshelfbuttons" style="">
+                                    <p class="text-right">
+                                        <a href="javascript:doDelete(101729);" class="btn btn-sm btn-danger" data-id="{{ fave.id }}">删除</a>
+                                    </p>
+                                </div>
+                                <ul class="list-inline">
+                                    <li>
+                                        <h3>
+                                            <a href="{% url 'novel:book' fave.id %}" class="text-info">{{ fave.novel_name }}</a>
+                                        </h3>
+                                    </li>
+                                </ul>
+                                <div class="text-muted">
+                                    <a href="{% url 'users:nouser' fave.novel_user.id %}" target="_blank">
+                                        <img class="img-circle" src="../../../../Banner/{{ fave.novel_user.image }}"></a>
+                                    <span>
+                                        <a href="{% url 'users:nouser' fave.novel_user.id %}" class="text-muted" target="_blank">{{ fave.novel_user.nick_name }}</a>&nbsp;
+                                    </span>
+                                    {% for fave_text in fave.get_time_book %}
+                                        <p class="updateTitle">更新至：<a href="{% url 'novel:text' fave_text.id %}" class="text-muted">{{ fave_text.novelchapter_name }}</a></p><p>
+                                    {% endfor %}
+                                    </p>
+                                </div>
+                                <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
+                            </div>
+                         </div>
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
+            <div class="text-center">
+                <div class="pagination">
+                <div class="btn-group">
+               {% if fave.has_previous %}
+                <a class="btn btn-default" a href="?{{ fave.previous_page_number.querystring }}">«</a>
+                {% endif %}
+            {% for page in fave.pages %}
+                 {% if page %}
+                {% ifequal page fave.number %}
+                <a class="btn btn-default active"  href="?{{ page.querystring }}">{{ page }}</a>
+                {% else %}
+                <a class="btn btn-default" href="?{{ page.querystring }}">{{ page }}</a>
+                {% endifequal %}
+                {% endif %}
+            {% endfor %}
+            {% if fave.has_next %}
+                <a class="btn btn-default" href="?{{ fave.next_page_number.querystring }}">»</a>
+            {% endif %}
+                </div>
+            </div>
+        </div>
+{% endif %}
+{% endblock %}
+{% block db_js %}
+    <script type="text/javascript">
+    //删除用户中心的指定的收藏小说
+    $('.btn-danger').on('click', function(){
+            var _this = $(this),
+                favid = _this.attr('data-id'); //获取属性id的值
+            $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "{% url 'users:userfave' %}",
+                    data: {
+                        fav_type: {{ request.user.id }},
+                        fav_id: favid,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    async: true,
+                    success: function(data) {
+                        setTimeout(function(){window.location.href = window.location.href;},10);
+                    }
+                });
+        });
+    </script>
+{% endblock %}

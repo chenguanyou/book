@@ -1,0 +1,59 @@
+/*body{color: #333333;}*/
+    /*#container{*/
+    	/*margin:0 auto;*/
+    	/*width: 900px;*/
+    	/*font-family: arial;*/
+    /*}*/
+    /*#container h3{font-family: "Microsoft YaHei";}*/
+    .heart {
+	    background: url(../images/web_heart_animation.png);
+	    background-position: left;
+	    background-repeat: no-repeat;
+	    height: 50px;
+	    width: 50px;
+	    cursor: pointer;
+	    position: absolute;
+		padding:0px 10px 0px 10px;
+	    /*left:-14px;*/
+        /*background-size:2900%;*/
+    }
+    /*.heart:hover, .heart:focus{*/
+    /*background-position: right;*/
+	/*}*/
+
+    @-webkit-keyframes heartBlast {
+    0% {
+	    background-position: left;
+	}
+	100% {
+	    background-position: right;
+	}
+	}
+
+	@keyframes heartBlast {
+	    0% {
+	    background-position: left;
+	}
+	100% {
+	    background-position: right;
+	}
+	}
+
+	.heartAnimation {
+    display: inline-block;
+    -webkit-animation-name: heartBlast;
+    animation-name: heartBlast;
+    -webkit-animation-duration: .8s;
+    animation-duration: .8s;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-timing-function: steps(28);
+    animation-timing-function: steps(28);
+    background-position: right;
+		padding:0px 40px 0px 10px
+    }
+    /*.feed p{font-family: "Microsoft YaHei",'Georgia', Times, Times New Roman, serif; font-size: 25px;}*/
+    /*.feed{clear: both; margin-bottom: :20px; height: 150px; position: relative;}*/
+    /*a{color: #7ac9ed;}*/
+    /*p{margin: 0px; padding: 0px;}*/
+    /*.likeCount{font-family: 'Georgia', Times, Times New Roman, serif; margin-top: 32px;margin-left: 68px;font-size: 25px;color: #999999}*/
