@@ -156,8 +156,8 @@ MEDIA_URL = '/Banner/'
 #定义邮箱账号密码
 EMAIL_HOST = "smtp.sina.com"
 EMAIL_PORT = 25
-EMAIL_HOST_USER = "lrjorg@sina.com"
-EMAIL_HOST_PASSWORD = "CXGwcm_C91"
+EMAIL_HOST_USER = "12345678@sina.com"
+EMAIL_HOST_PASSWORD = "12345678"
 EMAIL_USE_TLS= False
-EMAIL_FROM = "lrjorg@sina.com"
+EMAIL_FROM = "12345678@sina.com"
 
