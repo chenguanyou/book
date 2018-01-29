@@ -3,7 +3,7 @@ import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.contrib.auth import authenticate, login, logout #用来验证用户的登陆和退出功能
+from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.hashers import make_password #在用户注册的时候加密用户的密码
 
 from .forms import DlForm, ZcForm, UploadImageForm, MoforPwdForm, UploadinfoForm, CommentForm
