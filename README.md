@@ -23,7 +23,7 @@
 >4.然后进入项目根目录执行:```python manage.py makemigrations
 ```<br/>
 >
->5.在执行：```python manage.py migrate```<br/>
+>5.在执行：```python manage.py migrate```
 >
 >6.在建创后台管理员```python manage.py createsuperuser```
 ><br/>
