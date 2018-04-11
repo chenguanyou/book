@@ -20,8 +20,7 @@
 >
 >3.安装环境后请修改```Django-Imitation-osmetic-urge/Xiao_bai/```目录下的```settings.py```文件里面的```DATABASES ```数据库连接信息和邮箱配置信息<br/>
 >
->4.然后进入项目根目录执行:```python manage.py makemigrations
-```<br/>
+>4.然后进入项目根目录执行:```python manage.py makemigrations```<br/>
 >
 >5.在执行：```python manage.py migrate```
 >
