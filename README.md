@@ -18,16 +18,23 @@
 >
 >2.如果阁下没有安装上面我所说到的环境，请阁下自行安装。<br/>
 >
->3.安装环境后请修改```Django-Imitation-osmetic-urge/Xiao_bai/```目录下的```settings.py```文件里面的```DATABASES ```数据库连接信息和邮箱配置信息
+>3.安装环境后请修改```Django-Imitation-osmetic-urge/Xiao_bai/```目录下的```settings.py```文件里面的```DATABASES ```数据库连接信息和邮箱配置信息<br/>
+>
+>4.然后进入项目根目录执行:```python manage.py makemigrations
+```<br/>
+>
+>5.在执行：```python manage.py migrate```<br/>
+>
+>6.在建创后台管理员```python manage.py createsuperuser```
 ><br/>
 
 
 ##4.运行
->5.然后请阁下执行```python manage.py runserver```<br/>
+>1.然后请阁下进入项目根目录执行```python manage.py runserver```<br/>
 >
->6.然后访问```http://127.0.0.0:8000```<br/>
+>2.然后访问```http://127.0.0.0:8000```<br/>
 >
->7.后台地址```http://127.0.0.0:8000/admin/```<br/>
+>3.后台地址```http://127.0.0.0:8000/admin/```<br/>
 >
 
 ##5.项目效果图
